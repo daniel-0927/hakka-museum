@@ -3,39 +3,238 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>虛擬客家文化博物館</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>客家文化百科</title>
+  <style>
+    body {
+      font-family: "Noto Sans TC", sans-serif;
+      line-height: 1.8;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #202020;
+    }
+
+    header {
+      background-color: #336699;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .search-bar {
+      margin-top: 10px;
+    }
+
+    .search-bar input {
+      padding: 8px;
+      width: 60%;
+      max-width: 400px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    nav {
+      flex: 1 1 250px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    nav h2 {
+      font-size: 1.2em;
+      margin-top: 0;
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    nav ul li {
+      margin-bottom: 10px;
+    }
+
+    nav a {
+      color: #336699;
+      text-decoration: none;
+    }
+
+    article {
+      flex: 3 1 700px;
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      margin-left: 20px;
+    }
+
+    h1, h2, h3 {
+      color: #333;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 15px 0;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    footer {
+      background-color: #f1f1f1;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    /* 響應式設計 */
+    @media (max-width: 768px) {
+      main {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      nav {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+
+      article {
+        margin-left: 0;
+      }
+
+      .search-bar input {
+        width: 90%;
+      }
+    }
+  </style>
 </head>
 <body>
-
   <header>
-    <h1>虛擬客家文化博物館</h1>
-    <p>探索客家文化的多樣性：從語言、歷史到美食，帶你走進客家的世界</p>
+    <h1>客家文化百科</h1>
+    <p>探索語言、歷史、藝術與生活的多樣性</p>
+    <div class="search-bar">
+      <input type="text" placeholder="搜尋關鍵字…" oninput="searchContent(this.value)">
+    </div>
   </header>
 
   <main>
-    <section>
-      <h2>關於我們</h2>
-      <p>客家文化以其獨特的語言、藝術、音樂及歷史背景著稱。我們致力於將客家文化透過現代科技呈現給世界。</p>
-    </section>
+    <nav>
+      <h2>目錄</h2>
+      <ul>
+        <li><a href="#首頁">首頁</a></li>
+        <li><a href="#客家歷史">客家歷史</a></li>
+        <li><a href="#客語語言">客語語言</a></li>
+        <li><a href="#客家美食">客家美食</a></li>
+        <li><a href="#客家音樂與舞蹈">客家音樂與舞蹈</a></li>
+        <li><a href="#客家工藝">客家工藝</a></li>
+        <li><a href="#客家節慶">客家節慶</a></li>
+        <li><a href="#教育資源">教育資源</a></li>
+      </ul>
+    </nav>
 
-    <section>
-      <h2>探索主題</h2>
-      <div class="nav-grid">
-        <a href="history.html">客家歷史</a>
-        <a href="language.html">客語語言</a>
-        <a href="cuisine.html">客家美食</a>
-        <a href="music.html">音樂與舞蹈</a>
-        <a href="crafts.html">客家工藝</a>
-        <a href="festivals.html">客家節慶</a>
-        <a href="education.html">教育資源</a>
-      </div>
-    </section>
+    <article id="main-content">
+      <!-- 各主題內容區塊：可重複新增、修改或移動 -->
+      <section id="首頁">
+        <h2>首頁</h2>
+        <p>本網站致力於推廣客家文化，透過現代科技展現客語、歷史、美食與工藝的多元風貌。</p>
+        <blockquote>「探索客家文化的多樣性」</blockquote>
+        <blockquote>「從語言、歷史到美食，帶你走進客家的世界」</blockquote>
+      </section>
+
+      <section id="客家歷史">
+        <h2>客家歷史</h2>
+        <p>客家族群歷經多次遷徙，最終落腳於中國南方及台灣，形成特有的文化社會。</p>
+      </section>
+
+      <section id="客語語言">
+        <h2>客語語言</h2>
+        <p>客語是漢語的一支，具多個方言系，聲調豐富且保存古音。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>客語</th>
+              <th>華語對照</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>食飽未？</td><td>吃飽了嗎？</td></tr>
+            <tr><td>恁好</td><td>你好</td></tr>
+            <tr><td>阿婆</td><td>奶奶</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="客家美食">
+        <h2>客家美食</h2>
+        <ul>
+          <li>擂茶</li>
+          <li>客家小炒</li>
+          <li>鹹豬肉</li>
+        </ul>
+      </section>
+
+      <section id="客家音樂與舞蹈">
+        <h2>客家音樂與舞蹈</h2>
+        <p>以山歌、民謠與舞蹈展現族群精神與生活感。</p>
+      </section>
+
+      <section id="客家工藝">
+        <h2>客家工藝</h2>
+        <p>藺草、花布、陶藝等工藝展現實用與美感兼具的客家生活智慧。</p>
+      </section>
+
+      <section id="客家節慶">
+        <h2>客家節慶</h2>
+        <p>如桐花祭、擂茶節等節慶活動，展現客家文化活力。</p>
+      </section>
+
+      <section id="教育資源">
+        <h2>教育資源</h2>
+        <ul>
+          <li>線上學習平台</li>
+          <li>文化資料庫</li>
+          <li>體驗活動與工作坊</li>
+        </ul>
+      </section>
+    </article>
   </main>
 
   <footer>
-    <p>© 2025 虛擬客家文化博物館 ｜ 歡迎分享與推廣客家文化</p>
+    客家文化百科 © 2025｜由社群共同維護與推廣
   </footer>
 
+  <script>
+    function searchContent(keyword) {
+      const content = document.getElementById("main-content");
+      const sections = content.querySelectorAll("section");
+      keyword = keyword.toLowerCase();
+
+      sections.forEach(section => {
+        const text = section.innerText.toLowerCase();
+        if (text.includes(keyword)) {
+          section.style.display = "block";
+        } else {
+          section.style.display = "none";
+        }
+      });
+    }
+  </script>
 </body>
 </html>
