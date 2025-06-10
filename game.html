@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>客家文化探索小遊戲</title>
+<style>
+  body { font-family: "Noto Sans TC", sans-serif; max-width: 600px; margin: 20px auto; padding: 10px; }
+  h1 { text-align: center; color: #2E8B57; }
+  #question { margin: 20px 0; font-size: 1.2em; }
+  .option { background: #f0f0f0; margin: 8px 0; padding: 10px; cursor: pointer; border-radius: 5px; }
+  .option:hover { background: #c8e6c9; }
+  .correct { background: #a5d6a7 !important; }
+  .wrong { background: #ef9a9a !important; }
+  #score { font-weight: bold; margin-top: 15px; }
+  #next-btn { margin-top: 15px; padding: 8px 16px; background-color: #2E8B57; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  #next-btn:disabled { background-color: #999; cursor: not-allowed; }
+  #result { font-size: 1.3em; margin-top: 30px; text-align: center; }
+</style>
+</head>
+<body>
+
+<h1>客家文化探索小遊戲</h1>
+
+<div id="game-container">
+  <div id="question"></div>
+  <div id="options"></div>
+  <button id="next-btn" disabled>下一題</button>
+  <div id="score"></div>
+</div>
+
+<div id="result" style="display:none;"></div>
+
+<script>
+  const quizData = [
+    {
+      question: "客家人主要分布在哪些地區？",
+      options: ["台灣北部與中部", "台灣南部與東部", "台灣西部與海外", "台灣中部與東北部"],
+      answer: 2,
+      info: "客家人大多分布在台灣西部如桃園、新竹、苗栗及海外地區。"
+    },
+    {
+      question: "擂茶是由哪些材料製成？",
+      options: ["綠茶、米、花生", "茶葉、芝麻、花生、穀物", "紅茶、豆類、糖", "茶葉、水果、蜂蜜"],
+      answer: 1,
+      info: "擂茶由茶葉、芝麻、花生、穀物等磨製而成，是客家特色飲品。"
+    },
+    {
+      question: "客家花布的特色顏色是什麼？",
+      options: ["紅色與藍色", "黃色與綠色", "藍色與白色", "黑色與紅色"],
+      answer: 2,
+      info: "客家花布以藍色與白色為主，花紋細緻且色彩鮮明。"
+    },
+    {
+      question: "客家傳統節日有哪些？",
+      options: ["端午節、天穿日、上元節", "中秋節、清明節、除夕", "元宵節、端午節、重陽節", "清明節、天穿日、端午節"],
+      answer: 0,
+      info: "客家重要節日包含端午節、天穿日與上元節。"
+    },
+    {
+      question: "客家話中「你好」怎麼說？",
+      options: ["Li ho", "Ni hao", "Nei ho", "Li ho bo"],
+      answer: 0,
+      info: "客家話「你好」發音近似「Li ho」。"
+    },
+    {
+      question: "客家人傳統的建築樣式是？",
+      options: ["四合院", "三合院", "吊腳樓", "磚瓦屋"],
+      answer: 0,
+      info: "客家傳統建築多為四合院，講究防禦與聚居。"
+    },
+    {
+      question: "客家菜中著名的鹹味肉類料理是？",
+      options: ["鹹豬肉", "紅燒肉", "烤鴨", "叉燒"],
+      answer: 0,
+      info: "鹹豬肉是客家經典菜色，保存肉品的傳統方法。"
+    },
+    {
+      question: "天穿日是客家傳統節日中慶祝什麼？",
+      options: ["天神穿洞修補天空", "祖先祭祀", "豐收慶典", "迎春活動"],
+      answer: 0,
+      info: "天穿日紀念天神補天的傳說，是客家重要節日。"
+    },
+    {
+      question: "客家話屬於哪種語言系？",
+      options: ["閩南語系", "粵語系", "漢藏語系", "客家語系"],
+      answer: 3,
+      info: "客家話屬於漢藏語系的客家語分支。"
+    },
+    {
+      question: "客家擂茶常搭配哪種配料飲用？",
+      options: ["鹹菜", "油條", "甜點", "生菜"],
+      answer: 0,
+      info: "擂茶常配鹹菜一起吃，口味更豐富。"
+    },
+    {
+      question: "客家山歌的特色是什麼？",
+      options: ["重唱和聲", "高亢婉轉", "快節奏", "低沉嗓音"],
+      answer: 1,
+      info: "客家山歌以高亢婉轉著稱，表達豐富情感。"
+    },
+    {
+      question: "客家人使用哪種器具來製作擂茶？",
+      options: ["石臼", "擂缽", "木杵", "砂鍋"],
+      answer: 1,
+      info: "擂茶用擂缽（石臼狀器具）將茶葉與穀物磨成粉。"
+    },
+    {
+      question: "客家建築常見用來防禦的設計是？",
+      options: ["厚重磚牆", "環形護城河", "高樓", "木柵欄"],
+      answer: 0,
+      info: "四合院厚重的磚牆可防禦外來攻擊。"
+    },
+    {
+      question: "客家人傳統婚禮中常見的習俗是？",
+      options: ["拜天地", "披紅袍", "燒香拜佛", "迎親踩轎"],
+      answer: 0,
+      info: "拜天地是客家傳統婚禮的核心儀式。"
+    },
+    {
+      question: "客家話中“謝謝”怎麼說？",
+      options: ["多謝", "感恩", "謝謝", "多多謝"],
+      answer: 3,
+      info: "客家話中常說「多多謝」表示謝意。"
+    },
+    {
+      question: "客家擂茶中常加入哪種穀物？",
+      options: ["糯米", "玉米", "小米", "大麥"],
+      answer: 2,
+      info: "擂茶中經常加入小米增加口感。"
+    },
+    {
+      question: "客家人傳統節慶中的“上元節”主要慶祝什麼？",
+      options: ["祈求平安", "迎接春天", "祭祀祖先", "慶祝豐收"],
+      answer: 0,
+      info: "上元節是祈求平安的傳統節日。"
+    },
+    {
+      question: "客家山歌在傳唱時常用哪種樂器伴奏？",
+      options: ["二胡", "笛子", "三弦", "鋼琴"],
+      answer: 2,
+      info: "三弦是客家山歌常見的伴奏樂器。"
+    },
+    {
+      question: "客家花布常見的圖案有哪些？",
+      options: ["梅花與蝴蝶", "龍鳳紋", "鳳梨與鳳凰", "鳳梨與花卉"],
+      answer: 3,
+      info: "客家花布經常使用鳳梨與花卉圖案象徵吉祥。"
+    },
+    {
+      question: "客家人傳統農耕文化中重要的祭祀是？",
+      options: ["土地公祭", "祖先祭", "神農祭", "火神祭"],
+      answer: 0,
+      info: "土地公祭是感謝土地神保佑農作的重要祭典。"
+    }
+  ];
+
+  let currentIndex = 0;
+  let score = 0;
+
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const nextBtn = document.getElementById("next-btn");
+  const scoreEl = document.getElementById("score");
+  const resultEl = document.getElementById("result");
+
+  function loadQuestion() {
+    nextBtn.disabled = true;
+    const currentData = quizData[currentIndex];
+    questionEl.textContent = 第 ${currentIndex + 1} 題： + currentData.question;
+    optionsEl.innerHTML = "";
+    currentData.options.forEach((option, i) => {
+      const div = document.createElement("div");
+      div.className = "option";
+      div.textContent = option;
+      div.onclick = () => selectAnswer(i, div);
+      optionsEl.appendChild(div);
+    });
+    scoreEl.textContent = `分數：${score}`;
+  }
+
+  function selectAnswer(selected, div) {
+    const currentData = quizData[currentIndex];
+    const allOptions = optionsEl.children;
+
+    for (let i = 0; i < allOptions.length; i++) {
+      allOptions[i].onclick = null; // 禁止再點
+      if (i === currentData.answer) {
+        allOptions[i].classList.add("correct");
+      }
+    }
+    if (selected === currentData.answer) {
+      score++;
+      div.classList.add("correct");
+    } else {
+      div.classList.add("wrong");
+    }
+    scoreEl.textContent = `分數：${score}`;
+    showInfo(currentData.info);
+    nextBtn.disabled = false;
+  }
+
+  function showInfo(text) {
+    const infoDiv = document.createElement("div");
+    infoDiv.style.marginTop = "10px";
+    infoDiv.style.fontStyle = "italic";
+    infoDiv.textContent = "文化小知識：" + text;
+    optionsEl.appendChild(infoDiv);
+  }
+
+  nextBtn.onclick = () => {
+    currentIndex++;
+    if (currentIndex >= quizData.length) {
+      showResult();
+    } else {
+      loadQuestion();
+    }
+  };
+
+  function showResult() {
+    document.getElementById("game-container").style.display = "none";
+    resultEl.style.display = "block";
+    resultEl.textContent = `遊戲結束！你的總分是 ${score} / ${quizData.length}。謝謝參加客家文化探索！`;
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
